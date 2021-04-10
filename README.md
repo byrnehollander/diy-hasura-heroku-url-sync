@@ -31,7 +31,7 @@ Of course, this low bill is only possible because so many companies offer free p
   </br>
   I'm using a 1-5 ⭐ system for how highly I recommend each tool, and I've included some information about their financial situation so you can get a better sense of how likely they are to stick around. Hasura gets five stars from me (and they
   <a href="https://hasura.io/blog/announcing-our-series-b-25m-financing/" target="_blank">raised a Series B in September 2020</a>).
-
+  </br>
  ⭐⭐⭐⭐⭐ 
 * [Vercel](https://vercel.com/) – Vercel is a "deployment and collaboration platform for frontend developers." I'm hosting my frontend with them. They are the creators of the [Next.js React framework](https://nextjs.org/) and also maintain [Geist](https://github.com/geist-org/react), a minimal React UI library that I also use in my project. They last raised a [Series B round](https://vercel.com/blog/series-b-40m-to-build-the-next-web) in December 2020.
 * [GitHub](https://github.com/) – If you're reading this, you probably already know about GitHub. You can host your code on GitHub, open and review pull requests there, etc. Every deploy to my `main` branch on GitHub automatically triggers a new Vercel deploy. I'm most familiar with GitHub, but other people love [GitLab](https://about.gitlab.com/). They were [acquired by Microsoft in 2018](https://news.microsoft.com/announcement/microsoft-acquires-github/) for $7.5 billion.

@@ -32,7 +32,7 @@ Of course, this low bill is only possible because so many companies offer free p
   I'm using a 1-5 ⭐ system for how highly I recommend each tool, and I've included some information about their financial situation so you can get a better sense of how likely they are to stick around. Hasura gets five stars from me (and they
   <a href="https://hasura.io/blog/announcing-our-series-b-25m-financing/" target="_blank">raised a Series B in September 2020</a>).
 
-  </br>
+  </br></br>
 
   ⭐⭐⭐⭐⭐ 
   * [Vercel](https://vercel.com/) – Vercel is a "deployment and collaboration platform for frontend developers." I'm hosting my frontend with them. They are the creators of the [Next.js React framework](https://nextjs.org/) and also maintain [Geist](https://github.com/geist-org/react), a minimal React UI library that I also use in my project. They last raised a [Series B round](https://vercel.com/blog/series-b-40m-to-build-the-next-web) in December 2020.
@@ -70,13 +70,13 @@ You might now be thinking, "If I'm going to host my database on Heroku, why don'
 
 ### Why You Need This
 
-There is own major downside to a free Heroku database, however: maintenance. After maintenance, your database credentials change. *So, you must update your database credentials in your self-hosted Hasura GraphQL Engine so your app can continue to connect to your database.*
+There is own major downside to a free Heroku database: maintenance. After maintenance, **your database credentials change**. So, *you must* update your database credentials in your self-hosted Hasura GraphQL Engine so your app can continue to connect to your database.
 
 ![Heroku Maintenance Notice](./images/heroku-maintenance-email.png)
 
-Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. *Unfortunately*, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Heroku.
+Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Heroku.
 
-### Creating the Webhook Server
+### Create a Webhook Server
 
 Use: https://github.com/adnanh/webhook
 

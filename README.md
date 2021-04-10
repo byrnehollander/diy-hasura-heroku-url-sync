@@ -28,7 +28,7 @@ The biggest _potential_ downside of Hasura is that it can be relatively expensiv
 Of course, this low bill is only possible because so many companies offer free plans for small projects. A _huge_ thank you to a bunch of other companies that have free plans.
 <details>
   <summary>Expand this if you want to read more about the non-Hasura parts of my stack.</summary>
-  
+  </br>
   I'm using a 1-5 ⭐ system for how highly I recommend each tool, and I've included some information about their financial situation so you can get a better sense of how likely they are to stick around. Hasura gets five stars from me (and they [raised a Series B in September 2020](https://hasura.io/blog/announcing-our-series-b-25m-financing/).)
 
  ⭐⭐⭐⭐⭐ 
@@ -57,9 +57,9 @@ Helpfully, Hasura has documentation on how to [easily deploy their GraphQL Engin
 
 Hasura additionally has a guide to [creating a DigitalOcean managed Postgres database](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html#using-digitalocean-managed-postgres-database). But those start at a comparatively steep $15/month.
 
-![Create Heroku Database](./images/create-heroku-database.png)
-
 Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of $0/month, you can store up to 1 GB across 10,000 rows. For $9/month, your storage limit increases to 10 GB across ten million rows.
+
+![Create Heroku Database](./images/create-heroku-database.png)
 
 You might now be thinking, "If I'm going to host my database on Heroku, why don't I just host Hasura GraphQL Engine on Heroku too?" Well, the approximate Heroku equivalent of a [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/) is called a "[dyno](https://www.heroku.com/dynos)," and a dyno that doesn't auto-sleep starts at $7/month and is generally a bit more expensive than the Droplet-equivalent. Still, Heroku is a "Platform as a Service" while DigitalOcean is "Infrastructure as a Service", so Heroku _does_ offer you additional features for your money if you choose to go that route.
 

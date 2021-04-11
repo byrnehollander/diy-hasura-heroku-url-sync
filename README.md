@@ -164,9 +164,9 @@ Then, click `More` in the top-right and then `View webhooks`.
 
 On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
-You will need to be a bit careful not to restart the Docker containers _too_ often as it seems that the Hasura marketplace app isn't actually re-using TLS credentials across restarts; instead, it's regenerating new certs each time. And you're not going to have a great time if you run into [Let's Encrypt](https://letsencrypt.org/)'s [rate-limit](https://letsencrypt.org/docs/rate-limits/). Addressing this may be a topic of a future blog post. Anyway, the takeaways should be: 1. Consider removing the `docker-compose restart` line from your `redeploy.sh` file while you're testing , and 2. You don't want to hit this webhook _too_ often.
-
 <img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=290 />
+
+You will need to be a bit careful not to restart the Docker containers _too_ often as it seems that the Hasura marketplace app isn't actually re-using TLS credentials across restarts; instead, it's regenerating new certs each time. And you're not going to have a great time if you run into [Let's Encrypt](https://letsencrypt.org/)'s [rate-limit](https://letsencrypt.org/docs/rate-limits/). Addressing this may be a topic of a future blog post. Anyway, the takeaways should be: 1. Consider removing the `docker-compose restart` line from your `redeploy.sh` file while you're testing , and 2. You don't want to hit this webhook _too_ often.
 
 To test your setup, you can create a new config var in your Heroku app. To do this, navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – we just want to create a new release so Heroku calls your webhook.
 

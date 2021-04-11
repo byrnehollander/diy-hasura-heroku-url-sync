@@ -17,15 +17,15 @@ All this data is then accessible through a single GraphQL endpoint. You can use 
 
 ![GraphiQL in Hasura](./images/graphiql.png)
 
-Additionally, there are more advanced features like [permissioning](https://hasura.io/docs/latest/graphql/core/auth/authorization/permission-rules.html), [custom SQL functions](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/custom-functions.html), [event triggers](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html). Beyond their documentation, many of these topics are covered in [their extremely handy tutorials](https://hasura.io/learn/).
+Additionally, there are more advanced features like [permissioning](https://hasura.io/docs/latest/graphql/core/auth/authorization/permission-rules.html), [custom SQL functions](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/custom-functions.html), and [event triggers](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html). Beyond their documentation, many of these topics are covered in [their extremely handy tutorials](https://hasura.io/learn/).
 
-I've been building [Trivia.Digital](https://trivia.digital) with Hasura as my backend, and it's made it very simple to configure my database and make my data accessible over a real-time GraphQL API. It's [open-source](https://hasura.io/opensource/) and has [great documentation](https://hasura.io/docs/latest/graphql/core/index.html) and I highly recommend it! As a relative noob to both Postgres and GraphQL, its UI is more beginner-friendly than a tool like [PostGraphile](https://www.graphile.org/postgraphile/).
+I've been building [Trivia.Digital](https://trivia.digital) with Hasura as my backend, and it's made it very simple to configure my database and make my data accessible over a real-time GraphQL API. It's [open-source](https://hasura.io/opensource/) and has [great documentation](https://hasura.io/docs/latest/graphql/core/index.html) and I highly recommend it! As a relative noob to both Postgres and GraphQL, its UI is more beginner-friendly than a tool like [PostGraphile](https://www.graphile.org/postgraphile/) (though I've heard many great things about PostGraphile).
 
 The biggest _potential_ downside of Hasura is that it can be relatively expensive for a hobbyist to use it for a side project. But it doesn't have to be that way! Because their GraphQL Engine is open-source, I've been running it on [DigitalOcean](https://www.digitalocean.com/) for just $5/month.
 
-**This post explains how you, too, can run Hasura for $5/ month while avoiding some potential pitfalls.** _Caveat_: I am not an expert on any of these topics, so my apologies if I've gotten anything wrong. If you have any suggestions, please email me at bhollander823@gmail.com.
+**This post explains how you, too, can run Hasura for $5/month while avoiding some potential pitfalls.** _Caveat_: I am not an expert on any of these topics, so my apologies if I've gotten anything wrong. If you have any suggestions, please email me at bhollander823@gmail.com.
 
-Of course, this low bill is only possible because so many companies offer free plans for small projects. A _huge_ thank you to a bunch of other companies that have free plans.
+Of course, this low bill is only possible because so many companies offer free plans for small projects. A _huge_ thank you to all of these companies for making their tools so accessible.
 <details>
   <summary>Expand this if you want to read more about the non-Hasura parts of my stack.</summary>
   </br>
@@ -46,7 +46,7 @@ Of course, this low bill is only possible because so many companies offer free p
 
   ⭐⭐⭐
   * [Jitsi](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe) – An open-source videochat platform. You can even run your videochats on their servers, for free! Less capable than some competitors (like Zoom, who now offer a [Video SDK](https://zoom.us/docs/en-us/video-sdk.html) that has a limited free plan) but incredible at the price point. Ownership has changed hands a bit, and was [last sold to 8×8 from Atlassian in 2018](http://social.techcrunch.com/2018/10/29/atlassian-sells-jitsi-an-open-source-videoconferencing-tool-it-acquired-in-2015-to-8x8/).
-  * [Auth0](https://auth0.com/) – An authentication provider that makes it easy enough to let users securely sign in to your app. It's very nice to not worry too much about security, has its own login page I can redirect users to, and easily integrates with social login providers like Google. I don't love their login page, so I might replace them with my own auth system. Very recently (March 2021) [sold to Okta for $6.5 billion](https://auth0.com/blog/okta-auth0-announcement/).
+  * [Auth0](https://auth0.com/) – An authentication provider that makes it easy enough to let users securely sign in to your app. It's very nice to not worry too much about security, has its own login page I can redirect users to, and easily integrates with social login providers like Google. I don't love their login page, so I might replace them with my own auth system. They were [sold to Okta for $6.5 billion](https://auth0.com/blog/okta-auth0-announcement/) in March 2021.
 </details>
 
 ## Self-Hosting Hasura GraphQL Engine on DigitalOcean ($5/month)
@@ -60,7 +60,7 @@ Helpfully, Hasura has documentation on how to [easily deploy their GraphQL Engin
 
 Hasura additionally has a guide to [creating a DigitalOcean managed Postgres database](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html#using-digitalocean-managed-postgres-database). But those start at a comparatively steep $15/month.
 
-Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of $0/month, you can store up to 1 GB across 10,000 rows. For $9/month, your storage limit increases to 10 GB across ten million rows.
+Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of free, you can store up to 1 GB across 10k rows. For $9/month, your storage limit increases tenfold to 10 GB across ten million rows.
 
 ![Create Heroku Database](./images/create-heroku-database.png)
 
@@ -68,21 +68,21 @@ You might now be thinking, "If I'm going to host my database on Heroku, why don'
 
 ## The Biggest Issue With These Hosting Choices
 
-The biggest downside to this approach is that you must manually sync your Heroku database URL with your self-hosted Hasura GraphQL Engine. Before I implemented what I describe below, my site was unusable after Heroku maintenance.
+**The biggest downside to this approach is that you must manually sync your Heroku database URL with your self-hosted Hasura GraphQL Engine.** Before I implemented what I describe below, **my site was unusable after Heroku maintenance**.
 
 ### Why You Need This
 
-There is own major downside to a free Heroku database: maintenance. After maintenance, **your database credentials change**. So, *you must* update your database credentials in your self-hosted Hasura GraphQL Engine so your app can continue to connect to your database.
+There is own major downside to a free Heroku database: maintenance. After maintenance, _your database credentials change_. So, _you must_ update your database credentials in your self-hosted Hasura GraphQL Engine so your app can continue to connect to your database.
 
-<img src="./images/heroku-maintenance-email.png" alt="Heroku Maintenance Notice" width=300 />
+<img src="./images/heroku-maintenance-email.png" alt="Heroku Maintenance Notice" width=350 />
 
-Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Hasura GraphQL Engine.
+Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Hasura GraphQL Engine. If all goes well, this should take you less than an hour.
 
 ### 1. Create a Webhook Server
 
 [Webhooks](https://zapier.com/blog/what-are-webhooks/) are a way for apps to send automated messages to other apps. In this case, **we want Heroku to tell us when our database credentials change** so we can update them in our GraphQL Engine.
 
-Adnan Hajdarević's open-source [webhook](https://github.com/adnanh/webhook#what-is-webhook-) tool makes it easy to spin-up a server that will receive event notifications over a webhook. Your Droplet is probably running Ubuntu 18+, so after [SSHing into your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/), you can install `webhook` with the following command:
+Adnan Hajdarević's open-source [webhook](https://github.com/adnanh/webhook#what-is-webhook-) tool makes it easy to spin-up a server that will receive event notifications via webhook. Your Droplet is probably running Ubuntu 18+, so after [SSH'ing into your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/), you can install `webhook` with the following command:
 
 `sudo apt-get install webhook`
 
@@ -100,7 +100,7 @@ Here's what my `hooks.json` file looks like (except with correct paths, of cours
 ]
 ```
 
-When the hook is called (we'll get to that in the next section!) it executes the `redeploy.sh` script in the directory with our `docker-compose.yaml` file. Note that we don't actually care about the payload – we only care about knowing that something has changed in our Heroku database and then running our script.
+When the webhook receives the new Heroku release event (we'll get to that in the next section!) it executes the `redeploy.sh` script in the directory with our `docker-compose.yaml` file. Note that we don't actually care about the event payload – we only care about knowing that something has changed in our Heroku database and then running our script.
 
 Our script will fetch the new database URL from Heroku and parse the database password from the URL. It'll then update our `.env` file with these new values. Finally, it will restart the Docker containers.
 
@@ -130,15 +130,15 @@ Next, start the webhook server with the following command (be sure to replace `y
 
 The hook is now available at http://your-domain.com:9003/hooks/redeploy-webhook
 
-Note that I've chosen port 9003 arbitrarily – I cannot vouch for this port beyond that it functionally works for my application and it's not used by anything else. Also note that the webhook is using the insecure `http` protocol.
+Note that I've chosen port 9003 arbitrarily – I cannot vouch for this port beyond that it functionally works for my application and it's not used by anything else. Also note that the webhook is currently using the insecure `http` protocol.
 
-To upgrade to `https` you need to run the following command:
+To upgrade to `https` you need to find some certs and then run the following command:
 
 `webhook -hooks /path/to/hooks.json -secure -cert /path/to/public.crt -key path/to/private.key -ip "your-domain.com" -port 9003`
 
 After running this command, your hook will be available at https://your-domain.com:9003/hooks/redeploy-webhook – much better!
 
-If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/hasura-graphql), one of it's dependencies – [Caddy](https://caddyserver.com/) – will automatically obtain and renew TLS certificates for you when you run `docker-compose up`. These certs are stored in a [Docker Volume](https://docs.docker.com/storage/volumes/), so you can peek in there to either copy them to a different directory _or_ provide a path to them. Do note that the `webhook` `-cert` flag expects a public key and the `-key` flag expects a private key. You can find [the full documentation on `webhook parameters` here](https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md).
+If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/hasura-graphql), one of its dependencies – [Caddy](https://caddyserver.com/) – will automatically obtain and renew TLS certificates for you when you run `docker-compose up`. These certs are stored in a [Docker Volume](https://docs.docker.com/storage/volumes/), so you can peek in there to either provide a path to them _or_ copy them to a different directory. Do note that the `webhook` `-cert` flag expects a public key and the `-key` flag expects a private key. You can find [the full documentation on `webhook parameters` here](https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md).
 
 One last tip: when you run the above `webhook` command, add an ` &` to the end of it so the command runs in the background – you don't want the server to stop after you've closed your shell session.
 
@@ -154,25 +154,27 @@ and
 
 ### 3. Tell Heroku About Your Webhook URL
 
-Now, navigate to your Heroku app running your Postgres database. The URL will look something like https://dashboard.heroku.com/apps/YOUR-HEROKU-APP-NAME
+We're in the home stretch!
+
+Navigate to your Heroku app running your Postgres database. The URL will look something like https://dashboard.heroku.com/apps/YOUR-HEROKU-APP-NAME
 
 Then, click `More` in the top-right and then `View webhooks`.
 
 <img src="./images/create-heroku-webhook-1-of-2.png" alt="Create Heroku Webhook 1 of 2" width=190 />
 
-On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer back to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
+On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
 <img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=290 />
 
-To test your setup, you can create a new config var in your Heroku app. Navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – the point is to have Heroku hit your webhook by simulating a new release.
+To test your setup, you can create a new config var in your Heroku app. To do this, navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – we just want to create a new release so Heroku calls your webhook.
 
 ![Set Heroku Config Var](./images/heroku-set-config-var.png)
 
 Hopefully, you're all set! You can double-check by navigating to the directory with your `docker-compose.yaml` file and seeing that the `.env` file matches your Heroku database credentials.
 
-Now, any Heroku database maintenance will not be much of a problem for you or your app (though you'll likely have a few seconds of downtime while the credentials are updated).
+Now, any Heroku database maintenance will not be much of a problem for you or your app (except for a few seconds of downtime while the credentials are updated).
 
 ## Conclusion
 
-I hope you found this guide helpful! Again, if you have any suggestions or comments, please email me at bhollander823@gmail.com.
+I hope you found this guide helpful! Again, if you have any suggestions or comments, please email me at bhollander823@gmail.com 👋
 

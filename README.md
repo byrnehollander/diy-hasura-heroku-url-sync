@@ -1,7 +1,7 @@
 # Running Hasura On The Cheap
 ## What's Hasura?
 
-Hasura is the company that created the [Hasura GraphQL Engine](https://github.com/hasura/graphql-engine#hasura-graphql-engine), a "blazing-fast GraphQL server that gives you instant, realtime GraphQL APIs over Postgres." (For this blog post, I may use "Hasura" and "Hasura GraphQL Engine" interchangeably because this post is about self-hosting their GraphQL engine. But Hasura the company offers more than just their GraphQL engine.)
+[Hasura](https://hasura.io/) is the company that created the [Hasura GraphQL Engine](https://github.com/hasura/graphql-engine#hasura-graphql-engine), a "blazing-fast GraphQL server that gives you instant, realtime GraphQL APIs over Postgres." (For this blog post, I may use "Hasura" and "Hasura GraphQL Engine" interchangeably because this post is about self-hosting their GraphQL engine. But Hasura the company offers more than just their GraphQL engine.)
 
 ![Hasura Landing Page](./images/hasura-landing.png)
 

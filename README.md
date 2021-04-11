@@ -74,13 +74,13 @@ The biggest downside to this approach is that you must manually sync your Heroku
 
 There is own major downside to a free Heroku database: maintenance. After maintenance, **your database credentials change**. So, *you must* update your database credentials in your self-hosted Hasura GraphQL Engine so your app can continue to connect to your database.
 
-![Heroku Maintenance Notice](./images/heroku-maintenance-email.png)
+<img src="./images/heroku-maintenance-email.png" alt="Heroku Maintenance Notice" width=300 />
 
 Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Hasura GraphQL Engine.
 
-### First, Create a Webhook Server
+### 1. Create a Webhook Server
 
-[Webhooks](https://zapier.com/blog/what-are-webhooks/) are a way for apps to send automated messages to other apps. In this case, we want Heroku to tell us when our database credentials change so we can update them in our GraphQL Engine.
+[Webhooks](https://zapier.com/blog/what-are-webhooks/) are a way for apps to send automated messages to other apps. In this case, **we want Heroku to tell us when our database credentials change** so we can update them in our GraphQL Engine.
 
 Adnan Hajdarević's open-source [webhook](https://github.com/adnanh/webhook#what-is-webhook-) tool makes it easy to spin-up a server that will receive event notifications over a webhook. Your Droplet is probably running Ubuntu 18+, so after [SSHing into your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/), you can install `webhook` with the following command:
 
@@ -142,7 +142,7 @@ If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean M
 
 One last tip: when you run the above `webhook` command, add an ` &` to the end of it so the command runs in the background – you don't want the server to stop after you've closed your shell session.
 
-### Second, Configure docker-compose.yaml to Use Environment Variables
+### 2. Configure docker-compose.yaml to Use Environment Variables
 
 This step should be refreshingly straightforward! Instead of directly setting `POSTGRES_PASSWORD` and `HASURA_GRAPHQL_DATABASE_URL` in `docker-compose.yaml`, have them read from environment variables. We already named these env vars in `redeploy.sh`, so you can reference them like so:
 
@@ -152,17 +152,17 @@ and
 
 `HASURA_GRAPHQL_DATABASE_URL: "${DATABASE_URI}"`
 
-### Lastly, Tell Heroku About Your Webhook URL
+### 3. Tell Heroku About Your Webhook URL
 
 Now, navigate to your Heroku app running your Postgres database. The URL will look something like https://dashboard.heroku.com/apps/YOUR-HEROKU-APP-NAME
 
 Then, click `More` in the top-right and then `View webhooks`.
 
-![Create Heroku Webhook 1 of 2](./images/create-heroku-webhook-1-of-2.png)
+<img src="./images/create-heroku-webhook-1-of-2.png" alt="Create Heroku Webhook 1 of 2" width=190 />
 
 On the new page, click `Create Webhook`. Enter in your URL from before – in this case, http://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer back to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
-![Create Heroku Webhook 2 of 2](./images/create-heroku-webhook-2-of-2.png)
+<img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=190 />
 
 To test your setup, you can create a new config var in your Heroku app. Navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – the point is to have Heroku hit your webhook by simulating a new release.
 

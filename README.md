@@ -90,7 +90,7 @@ Once `webhook` is installed, you'll need to create a configuration file that def
 
 Here's what my `hooks.json` file looks like (except with correct paths, of course):
 
-```
+```JSON
 [
     {
         "id": "redeploy-webhook",
@@ -106,7 +106,7 @@ Our script will fetch the new database URL from Heroku and parse the database pa
 
 Here's what the `redeploy.sh` bash script looks like (make sure it's excecutable by running `chmod +x redeploy.sh`):
 
-```
+```Shell
 #!/bin/sh
 URL=$(heroku config:get DATABASE_URL -a YOUR-HEROKU-APP-NAME)
 PW=$(echo $URL | grep -Po "[a-zA-Z0-9]+?(?=@)")

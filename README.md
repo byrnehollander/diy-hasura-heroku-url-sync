@@ -60,7 +60,7 @@ Helpfully, Hasura has documentation on how to [easily deploy their GraphQL Engin
 
 Hasura additionally has a guide to [creating a DigitalOcean managed Postgres database](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html#using-digitalocean-managed-postgres-database). But those start at a comparatively steep $15/month.
 
-Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of free, you can store up to 1 GB across 10k rows. For $9/month, your storage limit increases tenfold to 10 GB across ten million rows.
+Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of free, you can store up to 1 GB across 10k rows. For $9/month, your storage limit dramatically increases to 10 GB across ten million rows.
 
 ![Create Heroku Database](./images/create-heroku-database.png)
 

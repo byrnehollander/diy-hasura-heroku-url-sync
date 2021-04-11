@@ -140,6 +140,8 @@ After running this command, your hook will be available at https://your-domain.c
 
 If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/hasura-graphql), one of its dependencies – [Caddy](https://caddyserver.com/) – will automatically obtain and renew TLS certificates for you when you run `docker-compose up`. These certs are stored in a [Docker Volume](https://docs.docker.com/storage/volumes/), so you can peek in there to either provide a path to them _or_ just copy them to a different directory. Do note that the `webhook` `-cert` flag expects a public key and the `-key` flag expects a private key. You can find [the full documentation on `webhook parameters` here](https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md).
 
+You will need to be a bit careful not to restart the Docker containers _too_ often as it seems that Hasura's DigitalOcean Marketplace app isn't actually re-using TLS credentials across restarts; instead, it's regenerating new certs each time. And you're not going to have a great time if you run into [Let's Encrypt](https://letsencrypt.org/)'s [rate-limit](https://letsencrypt.org/docs/rate-limits/). Addressing this may be a topic of a future blog post. Anyway, the takeaways should be: 1. Consider removing the `docker-compose restart` line from your `redeploy.sh` file while you're testing , and 2. You don't want to hit this webhook _too_ often.
+
 One last tip: when you run the above `webhook` command, add an ` &` to the end of it so the command runs in the background – you don't want the server to stop after you've closed your shell session.
 
 ### 2. Configure docker-compose.yaml to Use Environment Variables
@@ -165,8 +167,6 @@ Then, click `More` in the top-right and then `View webhooks`.
 On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
 <img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=290 />
-
-You will need to be a bit careful not to restart the Docker containers _too_ often as it seems that the Hasura marketplace app isn't actually re-using TLS credentials across restarts; instead, it's regenerating new certs each time. And you're not going to have a great time if you run into [Let's Encrypt](https://letsencrypt.org/)'s [rate-limit](https://letsencrypt.org/docs/rate-limits/). Addressing this may be a topic of a future blog post. Anyway, the takeaways should be: 1. Consider removing the `docker-compose restart` line from your `redeploy.sh` file while you're testing , and 2. You don't want to hit this webhook _too_ often.
 
 To test your setup, you can create a new config var in your Heroku app. To do this, navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – we just want to create a new release so Heroku calls your webhook.
 

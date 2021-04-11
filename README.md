@@ -160,7 +160,7 @@ Then, click `More` in the top-right and then `View webhooks`.
 
 <img src="./images/create-heroku-webhook-1-of-2.png" alt="Create Heroku Webhook 1 of 2" width=190 />
 
-On the new page, click `Create Webhook`. Enter in your URL from before – in this case, http://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer back to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
+On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer back to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
 <img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=190 />
 

@@ -130,15 +130,15 @@ Next, start the webhook server with the following command (be sure to replace `y
 
 The hook is now available at http://your-domain.com:9003/hooks/redeploy-webhook
 
-Note that I've chosen port 9003 arbitrarily – I cannot vouch for this port beyond that it functionally works for my application and it's not used by anything else. Also note that the webhook is currently using the insecure `http` protocol.
+Note that I've chosen port `9003` arbitrarily – I cannot vouch for this port beyond that it functionally works for my application and it's not used by anything else. Also note that the webhook is currently using the insecure `http` protocol.
 
-To upgrade to `https` you need to find some certs and then run the following command:
+To upgrade to `https` you need to find some certs (more on this in a moment) and then run the following command:
 
 `webhook -hooks /path/to/hooks.json -secure -cert /path/to/public.crt -key path/to/private.key -ip "your-domain.com" -port 9003`
 
 After running this command, your hook will be available at https://your-domain.com:9003/hooks/redeploy-webhook – much better!
 
-If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/hasura-graphql), one of its dependencies – [Caddy](https://caddyserver.com/) – will automatically obtain and renew TLS certificates for you when you run `docker-compose up`. These certs are stored in a [Docker Volume](https://docs.docker.com/storage/volumes/), so you can peek in there to either provide a path to them _or_ copy them to a different directory. Do note that the `webhook` `-cert` flag expects a public key and the `-key` flag expects a private key. You can find [the full documentation on `webhook parameters` here](https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md).
+If you've deployed the Hasura GraphQL Engine with [the app on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/hasura-graphql), one of its dependencies – [Caddy](https://caddyserver.com/) – will automatically obtain and renew TLS certificates for you when you run `docker-compose up`. These certs are stored in a [Docker Volume](https://docs.docker.com/storage/volumes/), so you can peek in there to either provide a path to them _or_ just copy them to a different directory. Do note that the `webhook` `-cert` flag expects a public key and the `-key` flag expects a private key. You can find [the full documentation on `webhook parameters` here](https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md).
 
 One last tip: when you run the above `webhook` command, add an ` &` to the end of it so the command runs in the background – you don't want the server to stop after you've closed your shell session.
 
@@ -163,6 +163,8 @@ Then, click `More` in the top-right and then `View webhooks`.
 <img src="./images/create-heroku-webhook-1-of-2.png" alt="Create Heroku Webhook 1 of 2" width=190 />
 
 On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
+
+You will need to be a bit careful not to restart the Docker containers _too_ often as it seems that the Hasura marketplace app isn't actually re-using TLS credentials across restarts; instead, it's regenerating new certs each time. And you're not going to have a great time if you run into [Let's Encrypt](https://letsencrypt.org/)'s [rate-limit](https://letsencrypt.org/docs/rate-limits/). Addressing this may be a topic of a future blog post. Anyway, the takeaways should be: 1. Consider removing the `docker-compose restart` line from your `redeploy.sh` file while you're testing , and 2. You don't want to hit this webhook _too_ often.
 
 <img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=290 />
 

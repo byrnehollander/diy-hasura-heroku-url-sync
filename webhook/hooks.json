@@ -2,6 +2,6 @@
     {
         "id": "redeploy-webhook",
         "execute-command": "/path/to/redeploy.sh",
-        "command-working-directory": "/path/to/folder/with/yaml/file"
+        "command-working-directory": "/path/to/folder/with/docker-compose.yaml"
     }
 ]

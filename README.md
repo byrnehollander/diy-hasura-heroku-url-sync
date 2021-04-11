@@ -76,7 +76,7 @@ There is own major downside to a free Heroku database: maintenance. After mainte
 
 <img src="./images/heroku-maintenance-email.png" alt="Heroku Maintenance Notice" width=350 />
 
-Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Hasura GraphQL Engine. If all goes well, this should take you less than an hour.
+Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/cloud/projects/heroku-url-sync.html)" to keep your project's `HEROKU_DATABASE_URL` in sync. Unfortunately, this feature is only available for Hasura Cloud users. *Fortunately*, I'm about to tell you how to build this feature for your self-hosted Hasura GraphQL Engine. If all goes well, this should take you less than an hour. If it goes _really_ well, it might only take you 15 minutes.
 
 ### 1. Create a Webhook Server
 

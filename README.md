@@ -162,7 +162,7 @@ Then, click `More` in the top-right and then `View webhooks`.
 
 On the new page, click `Create Webhook`. Enter in your URL from before – in this case, https://your-domain.com:9003/hooks/redeploy-webhook – and only select the `api:release` event type. If you'd like to set a secret, refer back to [the `webhook rules` documentation](https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md).
 
-<img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=190 />
+<img src="./images/create-heroku-webhook-2-of-2.png" alt="Create Heroku Webhook 2 of 2" width=290 />
 
 To test your setup, you can create a new config var in your Heroku app. Navigate to the `Settings` tab in your Heroku app, click `Reveal Config Vars` and create a new key. It doesn't matter what you put in as the key name – the point is to have Heroku hit your webhook by simulating a new release.
 

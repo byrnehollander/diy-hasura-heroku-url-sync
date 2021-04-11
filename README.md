@@ -100,7 +100,7 @@ Here's what my `hooks.json` file looks like (except with correct paths, of cours
 ]
 ```
 
-When the webhook receives the new Heroku release event (we'll get to that in the next section!) it executes the `redeploy.sh` script in the directory with our `docker-compose.yaml` file. Note that we don't actually care about the event payload – we only care about knowing that something has changed in our Heroku database and then running our script.
+When the webhook receives the new Heroku release event (we'll get to that in the next section!) it executes the `redeploy.sh` script in the directory with our `docker-compose.yaml` file. Note that we don't actually care about the event payload – we only care about knowing that something has changed with our Heroku database's configuration and then running our script.
 
 Our script will fetch the new database URL from Heroku and parse the database password from the URL. It'll then update our `.env` file with these new values. Finally, it will restart the Docker containers.
 

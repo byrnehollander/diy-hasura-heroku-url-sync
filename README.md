@@ -3,12 +3,14 @@
 
 [Hasura](https://hasura.io/) is the company that created the [Hasura GraphQL Engine](https://github.com/hasura/graphql-engine#hasura-graphql-engine), a "blazing-fast GraphQL server that gives you instant, realtime GraphQL APIs over Postgres." (For this blog post, I may use "Hasura" and "Hasura GraphQL Engine" interchangeably because this post is about self-hosting their GraphQL engine. But Hasura the company offers more than just their GraphQL engine.)
 
+I've been building [Trivia.Digital](https://trivia.digital) with Hasura as my backend, and it's made it very simple to configure my database and make my data accessible over a real-time GraphQL API. It's [open-source](https://hasura.io/opensource/) and has [great documentation](https://hasura.io/docs/latest/graphql/core/index.html) and I highly recommend it! As a relative noob to both Postgres and GraphQL, its UI is more beginner-friendly than a tool like [PostGraphile](https://www.graphile.org/postgraphile/) (though I've heard many great things about PostGraphile).
+
 ![Hasura Landing Page](./images/hasura-landing.png)
 
 You can use the Hasura GUI to create Postgres tables and easily do standard Postgres things like set:
 * columns
 * constraints
-* primary/foreign/unique keys
+* primary/foreign keys
 * table relationships
 
 ![Table Relationships in Hasura](./images/hasura-table-relationships.png)
@@ -18,8 +20,6 @@ All this data is then accessible through a single GraphQL endpoint. You can use 
 ![GraphiQL in Hasura](./images/graphiql.png)
 
 Additionally, there are more advanced features like [permissioning](https://hasura.io/docs/latest/graphql/core/auth/authorization/permission-rules.html), [custom SQL functions](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/custom-functions.html), and [event triggers](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html). Beyond their documentation, many of these topics are covered in [their extremely handy tutorials](https://hasura.io/learn/).
-
-I've been building [Trivia.Digital](https://trivia.digital) with Hasura as my backend, and it's made it very simple to configure my database and make my data accessible over a real-time GraphQL API. It's [open-source](https://hasura.io/opensource/) and has [great documentation](https://hasura.io/docs/latest/graphql/core/index.html) and I highly recommend it! As a relative noob to both Postgres and GraphQL, its UI is more beginner-friendly than a tool like [PostGraphile](https://www.graphile.org/postgraphile/) (though I've heard many great things about PostGraphile).
 
 The biggest _potential_ downside of Hasura is that it can be relatively expensive for a hobbyist to use it for a side project. But it doesn't have to be that way! Because their GraphQL Engine is open-source, I've been running it on [DigitalOcean](https://www.digitalocean.com/) for just $5/month.
 
@@ -51,16 +51,16 @@ Of course, this low bill is only possible because so many companies offer free p
 
 ## Self-Hosting Hasura GraphQL Engine on DigitalOcean ($5/month)
 
-While the [free tier of Hasura Cloud](https://hasura.io/pricing/) is perfect for development, you are limited to 60 requests/minute. That's _probably_ not going to be enough for a production app. To get unlimited requests, you need to upgrade to the Standard tier which starts at $99/month. Because my site is more of a hobby project, I sought out a cheaper way to run my project in production.
+While the [free tier of Hasura Cloud](https://hasura.io/pricing/) is good for development, you are limited to 60 requests/minute. That's _probably_ not going to be enough for a production app, and maybe even some hobby projects. To get unlimited requests, you would need to upgrade to the Standard tier which starts at $99/month. I sought out a cheaper way to run my project in production.
 
-Helpfully, Hasura has documentation on how to [easily deploy their GraphQL Engine](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html) to [DigitalOcean](https://www.digitalocean.com/), where a virtual machine with 1 GB memory and 25 GB disk will run you $5/month. Seems like a good deal to me! 
+Thankfully, Hasura has documentation on how to [easily deploy their GraphQL Engine](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html) to [DigitalOcean](https://www.digitalocean.com/), where a virtual machine with 1 GB memory and 25 GB disk will run you $5/month. Seems like a good deal to me! 
 
 
 ## Hosting a Postgres Database on Heroku (free)
 
 Hasura additionally has a guide to [creating a DigitalOcean managed Postgres database](https://hasura.io/docs/latest/graphql/core/deployment/deployment-guides/digital-ocean-one-click.html#using-digitalocean-managed-postgres-database). But those start at a comparatively steep $15/month.
 
-Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of free, you can store up to 1 GB across 10k rows. For $9/month, your storage limit dramatically increases to 10 GB across ten million rows.
+Thankfully, it's incredibly easy to create a free database hosted on [Heroku](https://www.heroku.com/) when you create a new Hasura project. For the low price of _**free**_, you can store up to 1 GB across 10k rows. For $9/month, your storage limit dramatically increases to 10 GB across ten million rows.
 
 ![Create Heroku Database](./images/create-heroku-database.png)
 
@@ -80,7 +80,7 @@ Hasura Cloud offers "[Heroku URL Sync](https://hasura.io/docs/latest/graphql/clo
 
 ### 1. Create a Webhook Server
 
-[Webhooks](https://zapier.com/blog/what-are-webhooks/) are a way for apps to send automated messages to other apps. In this case, **we want Heroku to tell us when our database credentials change** so we can update them in our GraphQL Engine.
+[Webhooks](https://zapier.com/blog/what-are-webhooks/) allow apps to send automated messages to other apps. In this case, **we want Heroku to tell us when our database credentials change** so we can update them in our GraphQL Engine.
 
 Adnan Hajdarević's open-source [webhook](https://github.com/adnanh/webhook#what-is-webhook-) tool makes it easy to spin-up a server that will receive event notifications via webhook. Your Droplet is probably running Ubuntu 18+, so after [SSH'ing into your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/), you can install `webhook` with the following command:
 
@@ -179,4 +179,3 @@ Now, any Heroku database maintenance will not be much of a problem for you or yo
 ## Conclusion
 
 I hope you found this guide helpful! Again, if you have any suggestions or comments, please email me at bhollander823@gmail.com 👋
-

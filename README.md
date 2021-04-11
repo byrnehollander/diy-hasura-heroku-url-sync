@@ -146,7 +146,7 @@ One last tip: when you run the above `webhook` command, add an ` &` to the end o
 
 ### 2. Configure docker-compose.yaml to Use Environment Variables
 
-This step should be refreshingly straightforward! Instead of directly setting `POSTGRES_PASSWORD` and `HASURA_GRAPHQL_DATABASE_URL` in `docker-compose.yaml`, have them read from environment variables. We already named these env vars in `redeploy.sh`, so you can reference them like so:
+This step should be refreshingly straightforward! Instead of directly setting `POSTGRES_PASSWORD` and `HASURA_GRAPHQL_DATABASE_URL` in `docker-compose.yaml`, you should access their values from [environment variables](https://medium.com/chingu/an-introduction-to-environment-variables-and-how-to-use-them-f602f66d15fa). We already named these env vars in `redeploy.sh`, so you can reference them like so:
 
 `POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"`
 
